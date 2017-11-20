@@ -1,5 +1,7 @@
 package br.com.carrinho.entity;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +19,7 @@ public class Carrinho {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-//    @Cascade(value = CascadeType.PERSIST)
-    @OneToMany(mappedBy = "carrinho")
+    @OneToMany(mappedBy = "carrinho", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private List<ProdutoCarrinho> produtoCarrinhoList;
 
     public Long getId() {
@@ -42,6 +43,11 @@ public class Carrinho {
     }
 
     public void setProdutoCarrinhoList(List<ProdutoCarrinho> produtoCarrinhoList) {
+        if(CollectionUtils.isNotEmpty(produtoCarrinhoList)){
+            for(ProdutoCarrinho produtoCarrinho : produtoCarrinhoList){
+                produtoCarrinho.setCarrinho(this);
+            }
+        }
         this.produtoCarrinhoList = produtoCarrinhoList;
     }
 

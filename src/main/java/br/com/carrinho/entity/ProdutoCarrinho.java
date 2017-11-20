@@ -1,18 +1,19 @@
 package br.com.carrinho.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import javax.sql.rowset.serial.SerialArray;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "produto_carrinho")
-@Embeddable
 public class ProdutoCarrinho implements Serializable{
 
     @Column(name = "quantidade", nullable = false)
     private Long quantidade;
 
+    @JsonIgnore
     @Id
     @ManyToOne
     @JoinColumn(name = "id_carrinho", nullable = false)
