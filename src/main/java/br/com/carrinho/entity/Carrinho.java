@@ -19,7 +19,7 @@ public class Carrinho {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "carrinho", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "carrinho", cascade = CascadeType.PERSIST)
     private List<ProdutoCarrinho> produtoCarrinhoList;
 
     public Long getId() {
