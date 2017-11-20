@@ -1,6 +1,6 @@
 CREATE TABLE carrinho(
   id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  data_compra DATETIME NOT NULL,
+  data_compra TIMESTAMP NOT NULL,
   id_usuario BIGINT NOT NULL
 );
 

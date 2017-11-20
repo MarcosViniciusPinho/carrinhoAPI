@@ -1,7 +1,6 @@
 package br.com.carrinho.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +12,6 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @Column(name = "data_compra", nullable = false)
-    private LocalDateTime dataCompra;
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
@@ -31,14 +27,6 @@ public class Carrinho {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getDataCompra() {
-        return dataCompra;
-    }
-
-    public void setDataCompra(LocalDateTime dataCompra) {
-        this.dataCompra = dataCompra;
     }
 
     public Usuario getUsuario() {
