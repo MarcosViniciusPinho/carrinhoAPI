@@ -1,0 +1,2 @@
+INSERT INTO usuario(nome, sobrenome, data_nascimento) VALUES('Marcos', 'Pinho',  STR_TO_DATE('14/09/1984', '%d/%m/%Y'));
+INSERT INTO usuario(nome, sobrenome, data_nascimento) VALUES('Sabrina', 'Pinho',  STR_TO_DATE('07/04/1993', '%d/%m/%Y'));
