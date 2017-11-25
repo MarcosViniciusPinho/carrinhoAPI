@@ -3,6 +3,7 @@ package br.com.carrinho.entity;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,10 +16,12 @@ public class Carrinho {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotNull
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    @NotNull
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.PERSIST)
     private List<ProdutoCarrinho> produtoCarrinhoList;
 
