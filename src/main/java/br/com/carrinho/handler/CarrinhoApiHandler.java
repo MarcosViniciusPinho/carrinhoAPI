@@ -2,6 +2,7 @@ package br.com.carrinho.handler;
 
 import br.com.carrinho.handler.domain.ResponseError;
 import br.com.carrinho.service.exception.NullParameterException;
+import br.com.carrinho.service.exception.RecurseNotFoundException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -47,19 +48,24 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-        return throwException(ex, request);
+        return throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ NullParameterException.class })
     public ResponseEntity<Object> handleNullParameterException(NullParameterException ex, WebRequest request) {
-        return throwException(ex, request);
+        return throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
     }
 
-    private ResponseEntity<Object> throwException(Exception ex, WebRequest request){
+    @ExceptionHandler({ RecurseNotFoundException.class })
+    public ResponseEntity<Object> handleRecurseNotFoundException(RecurseNotFoundException ex, WebRequest request) {
+        return throwException(ex, request, "recurse.not.found", HttpStatus.NOT_FOUND);
+    }
+
+    private ResponseEntity<Object> throwException(Exception ex, WebRequest request, String message, HttpStatus status){
         List<ResponseError> erros = Arrays.asList(new ResponseError(
-                this.messageSource.getMessage("operation.failed", null, LocaleContextHolder.getLocale()),
+                this.messageSource.getMessage(message, null, LocaleContextHolder.getLocale()),
                 ExceptionUtils.getRootCauseMessage(ex)));
-        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), status, request);
     }
 
     private List<ResponseError> createErros(BindingResult bindingResult) {
