@@ -1,0 +1,1 @@
+ALTER TABLE usuario ADD CONSTRAINT un_login UNIQUE(login);

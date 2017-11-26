@@ -22,6 +22,12 @@ public class Usuario {
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 
+    @Column(name = "login", length = 50, nullable = false, unique = true)
+    private String login;
+
+    @Column(name = "senha", length = 255, nullable = false)
+    private String senha;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +58,22 @@ public class Usuario {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     @Override
