@@ -1,6 +1,7 @@
 package br.com.carrinho.handler;
 
 import br.com.carrinho.handler.domain.ResponseError;
+import br.com.carrinho.service.exception.NullParameterException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -28,14 +29,6 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    /**
-     * Método que gera uma exceção para quando não existir ou o tipo de dado informado está errado de um atributo na classe de dominio informado no client
-     * @param ex ex
-     * @param headers headers
-     * @param status status
-     * @param request request
-     * @return ResponseEntity<Object>
-     */
     @Override
     public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
@@ -45,14 +38,6 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
     }
 
-    /**
-     * Método que gera uma exceção de acordo com a regra do Hibernate Validator na classe entity em questão.
-     * @param ex ex
-     * @param headers headers
-     * @param status status
-     * @param request request
-     * @return ResponseEntity<Object>
-     */
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
@@ -60,14 +45,17 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
     }
 
-    /**
-     * Método que gera uma exceção quando o atributo id de um relacionamento nao existir na entidade em questão.
-     * @param ex ex
-     * @param request request
-     * @return ResponseEntity<Object>
-     */
-    @ExceptionHandler({ DataIntegrityViolationException.class } )
+    @ExceptionHandler({ DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+        return throwException(ex, request);
+    }
+
+    @ExceptionHandler({ NullParameterException.class })
+    public ResponseEntity<Object> handleNullParameterException(NullParameterException ex, WebRequest request) {
+        return throwException(ex, request);
+    }
+
+    private ResponseEntity<Object> throwException(Exception ex, WebRequest request){
         List<ResponseError> erros = Arrays.asList(new ResponseError(
                 this.messageSource.getMessage("operation.failed", null, LocaleContextHolder.getLocale()),
                 ExceptionUtils.getRootCauseMessage(ex)));
