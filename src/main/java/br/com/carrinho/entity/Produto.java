@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public class Produto implements Serializable{
 
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "valor", precision = 10, scale = 2, nullable = false)
-    private String valor;
+    private BigDecimal valor;
 
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @OneToOne
@@ -64,11 +65,11 @@ public class Produto implements Serializable{
         this.descricao = descricao;
     }
 
-    public String getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
