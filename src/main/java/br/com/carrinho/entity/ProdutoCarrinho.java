@@ -10,6 +10,8 @@ import java.util.Objects;
 @Table(name = "produto_carrinho")
 public class ProdutoCarrinho implements Serializable{
 
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "quantidade", nullable = false)
     private Long quantidade;
 

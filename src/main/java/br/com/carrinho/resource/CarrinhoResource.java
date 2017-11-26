@@ -1,7 +1,7 @@
 package br.com.carrinho.resource;
 
 import br.com.carrinho.entity.Carrinho;
-import br.com.carrinho.service.CarrinhoService;
+import br.com.carrinho.facade.CarrinhoFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ import java.net.URI;
 public class CarrinhoResource {
 
     @Autowired
-    private CarrinhoService carrinhoService;
+    private CarrinhoFacade carrinhoFacade;
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Carrinho> create(@Valid @RequestBody Carrinho carrinho){
-        Carrinho carrinhoSalvo = this.carrinhoService.create(carrinho);
+        Carrinho carrinhoSalvo = this.carrinhoFacade.create(carrinho);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(carrinhoSalvo.getId()).toUri();
