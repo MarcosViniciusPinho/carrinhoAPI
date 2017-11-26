@@ -1,6 +1,7 @@
 package br.com.carrinho.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,15 +19,19 @@ public class Produto implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "nome", length = 30, nullable = false)
     private String nome;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "descricao", length = 60)
     private String descricao;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "valor", precision = 10, scale = 2, nullable = false)
     private String valor;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @OneToOne
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
