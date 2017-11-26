@@ -1,5 +1,7 @@
 package br.com.carrinho.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -29,6 +31,7 @@ public class Produto implements Serializable{
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "produto")
     private List<ProdutoCarrinho> produtoCarrinhoList;
 

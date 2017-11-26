@@ -1,5 +1,7 @@
 package br.com.carrinho.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -28,6 +30,7 @@ public class Usuario implements Serializable{
     @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
 
+    @JsonIgnore
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
 
