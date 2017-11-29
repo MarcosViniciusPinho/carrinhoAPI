@@ -1,10 +1,9 @@
 package br.com.carrinho.entity;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,12 +48,18 @@ public class Carrinho implements Serializable {
     }
 
     public void setProdutoCarrinhoList(List<ProdutoCarrinho> produtoCarrinhoList) {
-        if(CollectionUtils.isNotEmpty(produtoCarrinhoList)){
-            for(ProdutoCarrinho produtoCarrinho : produtoCarrinhoList){
-                produtoCarrinho.setCarrinho(this);
-            }
-        }
+        produtoCarrinhoList.forEach(produtoCarrinho -> produtoCarrinho.setCarrinho(this));
         this.produtoCarrinhoList = produtoCarrinhoList;
+    }
+
+    @Transient
+    public BigDecimal getValorDaCompra(){
+        BigDecimal valorDaCompra = BigDecimal.ZERO;
+        for(ProdutoCarrinho produtoCarrinho : this.produtoCarrinhoList){
+            valorDaCompra = valorDaCompra.add(produtoCarrinho.getProduto().getValor().multiply(
+                    BigDecimal.valueOf(produtoCarrinho.getQuantidade())));
+        }
+        return valorDaCompra;
     }
 
     @Override
