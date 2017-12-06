@@ -41,7 +41,7 @@ public class ProdutoFilterRepositoryImpl extends FilterRepositoryImpl<Produto, P
 
         if (StringUtils.isNotEmpty(produtoFilter.getNomeCategoria())) {
             predicates.add(builder.like(
-                    builder.lower(root.get("categoria.nome")), "%" + produtoFilter.getNomeCategoria() + "%"));
+                    builder.lower(root.join("categoria").get("nome")), "%" + produtoFilter.getNomeCategoria() + "%"));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);
