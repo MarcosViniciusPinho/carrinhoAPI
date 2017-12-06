@@ -4,7 +4,7 @@ import br.com.carrinho.entity.Produto;
 import br.com.carrinho.repository.filter.ProdutoFilterRepository;
 import br.com.carrinho.repository.filter.model.ProdutoFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class ProdutoFilterRepositoryImpl extends FilterRepositoryImpl<Produto, ProdutoFilter> implements ProdutoFilterRepository {
 
     @Override
@@ -46,6 +46,5 @@ public class ProdutoFilterRepositoryImpl extends FilterRepositoryImpl<Produto, P
 
         return predicates.toArray(new Predicate[predicates.size()]);
     }
-
 
 }
