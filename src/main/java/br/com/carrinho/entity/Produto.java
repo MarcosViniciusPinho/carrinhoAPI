@@ -37,6 +37,14 @@ public class Produto implements Serializable{
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    @Column(name = "imagem", nullable = false)
+    private String pathImagem;
+
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    @Column(name = "quantidade", nullable = false)
+    private String capacidade;
+
     @JsonIgnore
     @OneToMany(mappedBy = "produto")
     private List<ProdutoCarrinho> produtoCarrinhoList;
@@ -79,6 +87,22 @@ public class Produto implements Serializable{
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(String capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public String getPathImagem() {
+        return pathImagem;
+    }
+
+    public void setPathImagem(String pathImagem) {
+        this.pathImagem = pathImagem;
     }
 
     public List<ProdutoCarrinho> getProdutoCarrinhoList() {

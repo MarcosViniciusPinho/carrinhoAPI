@@ -3,6 +3,8 @@ CREATE TABLE produto(
   nome VARCHAR(30) NOT NULL,
   descricao VARCHAR(60),
   valor DECIMAL(10,2) NOT NULL,
+  imagem LONGTEXT NOT NULL,
+  quantidade VARCHAR(10) NOT NULL,
   id_categoria BIGINT NOT NULL
 );
 
