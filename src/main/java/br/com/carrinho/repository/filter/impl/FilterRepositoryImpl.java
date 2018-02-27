@@ -24,6 +24,7 @@ public abstract class FilterRepositoryImpl<E, F> implements FilterRepository<E, 
 
         Predicate[] predicates = criarRestricoes(filter, builder, root);
         criteria.where(predicates);
+        criteria.orderBy(builder.asc(root.get("nome")));
 
         TypedQuery<E> query = manager.createQuery(criteria);
         return query.getResultList();
