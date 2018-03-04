@@ -5,6 +5,9 @@ import br.com.carrinho.service.EmailService;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -43,12 +46,12 @@ public class EmailServiceImpl implements EmailService {
 
             this.mailSender.send(message);
 
-        } catch (MailException | MessagingException e) {
+        } catch (MailException | MessagingException | ResourceNotFoundException | ParseErrorException | MethodInvocationException e) {
             throw new RuntimeException("Erro ao enviar o e-mail", e);
         }
     }
 
-    private String createTemplate(Carrinho carrinho) {
+    private String createTemplate(Carrinho carrinho) throws ResourceNotFoundException, ParseErrorException, MethodInvocationException{
         VelocityContext context = new VelocityContext();
         Template template = this.velocityEngine.getTemplate("template.vm");
         context.put("produtos", carrinho.getProdutoCarrinhoList());
