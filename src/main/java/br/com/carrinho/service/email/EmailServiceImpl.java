@@ -1,0 +1,59 @@
+package br.com.carrinho.service.email;
+
+import br.com.carrinho.entity.Carrinho;
+import br.com.carrinho.service.EmailService;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.StringWriter;
+
+@Service
+public class EmailServiceImpl implements EmailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private VelocityEngine velocityEngine;
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void send(Carrinho carrinho) {
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+        MimeMessage message = sender.createMimeMessage();
+
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setText(this.createTemplate(carrinho), true);
+            helper.setTo("marcosjava2008@gmail.com");
+            helper.setFrom("marcosjava2008@gmail.com");
+            helper.setSubject("Prezado " + carrinho.getUsuario().getNome() + ", sua compra foi realizada com sucesso!");
+
+            this.mailSender.send(message);
+
+        } catch (MailException | MessagingException e) {
+            throw new RuntimeException("Erro ao enviar o e-mail", e);
+        }
+    }
+
+    private String createTemplate(Carrinho carrinho) {
+        VelocityContext context = new VelocityContext();
+        Template template = this.velocityEngine.getTemplate("template.vm");
+        context.put("produtos", carrinho.getProdutoCarrinhoList());
+        StringWriter conteudoHtml = new StringWriter(1024);
+        template.merge(context, conteudoHtml);
+        return conteudoHtml.toString();
+    }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div>
+            <table style="border-collapse: collapse;">
+                <tr>
+                    <th style="text-align: center; border:1px solid;"></th>
+                    <th style="text-align: center; border:1px solid;">Produto</th>
+                    <th style="text-align: center; border:1px solid;">Preço</th>
+                    <th style="text-align: center; border:1px solid;">Quantidade</th>
+                </tr>
+                #foreach($produtoComprado in $produtos)
+                    <tr>
+##                        <td style="text-align: center; border:1px solid;"><img src="$produtoComprado.produto.pathImagem" height="80"></td>
+                        <td style="text-align: center; border:1px solid;"></td>
+                        <td style="text-align: center; border:1px solid;">$produtoComprado.produto.nome</td>
+                        <td style="text-align: center; border:1px solid;">$produtoComprado.produto.valor</td>
+                        <td style="text-align: center; border:1px solid;">$produtoComprado.quantidade</td>
+                    </tr>
+                #end
+            </table>
+        </div>
+    </body>
+</html>
