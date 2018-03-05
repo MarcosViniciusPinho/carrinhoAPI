@@ -8,6 +8,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.tools.generic.NumberTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -55,6 +56,7 @@ public class EmailServiceImpl implements EmailService {
         VelocityContext context = new VelocityContext();
         Template template = this.velocityEngine.getTemplate("template.vm", "utf-8");
         context.put("produtos", carrinho.getProdutoCarrinhoList());
+        context.put("number", new NumberTool());
         StringWriter conteudoHtml = new StringWriter(1024);
         template.merge(context, conteudoHtml);
         return conteudoHtml.toString();
