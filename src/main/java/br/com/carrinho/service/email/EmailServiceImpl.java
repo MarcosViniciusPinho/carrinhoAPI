@@ -53,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
 
     private String createTemplate(Carrinho carrinho) throws ResourceNotFoundException, ParseErrorException, MethodInvocationException{
         VelocityContext context = new VelocityContext();
-        Template template = this.velocityEngine.getTemplate("template.vm");
+        Template template = this.velocityEngine.getTemplate("template.vm", "utf-8");
         context.put("produtos", carrinho.getProdutoCarrinhoList());
         StringWriter conteudoHtml = new StringWriter(1024);
         template.merge(context, conteudoHtml);
