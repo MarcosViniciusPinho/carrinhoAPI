@@ -57,6 +57,7 @@ public class EmailServiceImpl implements EmailService {
         Template template = this.velocityEngine.getTemplate("template.vm", "utf-8");
         context.put("produtos", carrinho.getProdutoCarrinhoList());
         context.put("number", new NumberTool());
+        context.put("total", carrinho.getValorDaCompra());
         StringWriter conteudoHtml = new StringWriter(1024);
         template.merge(context, conteudoHtml);
         return conteudoHtml.toString();
