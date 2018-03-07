@@ -58,6 +58,7 @@ public class EmailServiceImpl implements EmailService {
         context.put("produtos", carrinho.getProdutoCarrinhoList());
         context.put("number", new NumberTool());
         context.put("total", carrinho.getValorDaCompra());
+        context.put("usuario", carrinho.getUsuario());
         StringWriter conteudoHtml = new StringWriter(1024);
         template.merge(context, conteudoHtml);
         return conteudoHtml.toString();

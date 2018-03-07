@@ -1,29 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta http-equiv="Content-Language" content="pt-br">
-        <meta http-equiv="Content-Type" content="text/html" />
-    </head>
-    <body>
-        <div>
-            <table style="border-collapse: collapse;">
-                <tr>
-                    <th style="text-align: center; border:1px solid;"></th>
-                    <th style="text-align: center; border:1px solid;">Produto</th>
-                    <th style="text-align: center; border:1px solid;">Preço</th>
-                    <th style="text-align: center; border:1px solid;">Quantidade</th>
-                </tr>
-                #foreach($produtoComprado in $produtos)
-                    #set ($totalPorProduto = $produtoComprado.produto.valor * $produtoComprado.quantidade)
-                    <tr>
-                        <td style="text-align: center; border:1px solid;"><img src="$produtoComprado.produto.pathImagem" height="80"></td>
-                        <td style="text-align: center; border:1px solid;">$produtoComprado.produto.nome - $produtoComprado.produto.capacidade</td>
-                        <td style="text-align: center; border:1px solid;">$number.format("currency", $totalPorProduto)</td>
-                        <td style="text-align: center; border:1px solid;">$produtoComprado.quantidade</td>
-                    </tr>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        >
+
+<body style="font-family: Arial; font-size: 14px;">
+
+<h1 style="font-size: 22px">Olá $usuario.nome</h1>
+
+<p>
+    Estamos enviando para você a relação de itens da sua compra em nossa loja de cervejas.
+</p>
+
+<table style="width: 100%; border-collapse: collapse;  margin: 20px 0">
+    #foreach($produtoComprado in $produtos)
+        #set ($totalPorProduto = $produtoComprado.produto.valor * $produtoComprado.quantidade)
+        <tr style="border-bottom: 1px solid #ccc; border-top: 1px solid #ccc">
+            <td style="width: 50px; padding-bottom: 10px; padding-top: 10px">
+                #if( $produtoComprado.produto.descricao.contains('garrafa') )
+                    <img style="width: 40px" src="$produtoComprado.produto.pathImagem" height="120"/>
+                #elseif( $produtoComprado.produto.descricao.contains('lata') )
+                    <img style="width: 40px" src="$produtoComprado.produto.pathImagem" height="80"/>
                 #end
-            </table>
-            <span>Total: $number.format("currency", $total)</span>
-        </div>
-    </body>
+
+            </td>
+            <td style="vertical-align: top; padding-bottom: 10px; padding-top: 10px">
+                <div style="display: block; font-weight: bold; font-size: 16px">$produtoComprado.produto.nome - $produtoComprado.produto.capacidade</div>
+                <div style="color: #8e8e8e">$produtoComprado.produto.categoria.nome</div>
+                <div style="color: #8e8e8e">$produtoComprado.quantidade x $number.format("currency", $produtoComprado.produto.valor)</div>
+            </td>
+            <td style="vertical-align: top; text-align: right; padding-bottom: 10px; padding-top: 10px">
+                <span style="display: block; font-weight: bold; font-size: 16px">$number.format("currency", $totalPorProduto)</span>
+            </td>
+        </tr>
+    #end
+</table>
+
+<p style="font-size: 12px">
+    * O status da sua compra é: <strong style="color: red"><span>Concluída</span></strong>.
+</p>
+
+<table style="width: 100%;">
+    <tr>
+        <td style="text-align: right; font-weight: bold; font-size: 16px">Total:</td>
+        <td style="width: 100px; text-align: right; font-weight: bold; font-size: 16px">
+            <span>$number.format("currency", $total)</span>
+        </td>
+    </tr>
+</table>
+</body>
 </html>
