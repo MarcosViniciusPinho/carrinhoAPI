@@ -41,8 +41,8 @@ public class EmailServiceImpl implements EmailService {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
             helper.setText(this.createTemplate(carrinho), true);
-            helper.setTo("marcosjava2008@gmail.com");
-            helper.setFrom("marcosjava2008@gmail.com");
+            helper.setTo(carrinho.getUsuario().getEmail());
+            helper.setFrom(carrinho.getUsuario().getEmail());
             helper.setSubject("Prezado " + carrinho.getUsuario().getNome() + ", sua compra foi realizada com sucesso!");
 
             this.mailSender.send(message);

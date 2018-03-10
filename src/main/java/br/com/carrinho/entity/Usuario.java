@@ -30,6 +30,9 @@ public class Usuario implements Serializable{
     @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
 
+    @Column(name = "email", length = 50, nullable = false, unique = true)
+    private String email;
+
     @JsonIgnore
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
@@ -80,6 +83,14 @@ public class Usuario implements Serializable{
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
