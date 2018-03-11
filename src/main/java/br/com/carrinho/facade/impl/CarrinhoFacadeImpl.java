@@ -1,6 +1,7 @@
 package br.com.carrinho.facade.impl;
 
 import br.com.carrinho.entity.Carrinho;
+import br.com.carrinho.entity.Endereco;
 import br.com.carrinho.entity.Usuario;
 import br.com.carrinho.facade.CarrinhoFacade;
 import br.com.carrinho.service.CarrinhoService;
@@ -27,11 +28,17 @@ public class CarrinhoFacadeImpl implements CarrinhoFacade{
 
     @Override
     public Carrinho create(Carrinho carrinho) {
-        Usuario usuario = this.usuarioService.findByLogin(carrinho.getUsuario().getLogin());
-        carrinho.setUsuario(usuario);
+        carrinho.setUsuario(this.getUsuarioComEndereco(carrinho));
         this.produtoService.recuperarProdutosNoCarrinho(carrinho.getProdutoCarrinhoList());
         Carrinho carrinhoSalvo = this.carrinhoService.create(carrinho);
         this.emailService.send(carrinhoSalvo);
         return carrinhoSalvo;
+    }
+
+    private Usuario getUsuarioComEndereco(Carrinho carrinho){
+        Endereco endereco = carrinho.getUsuario().getEndereco();
+        Usuario usuario = this.usuarioService.findByLogin(carrinho.getUsuario().getLogin());
+        usuario.setEndereco(endereco);
+        return usuario;
     }
 }

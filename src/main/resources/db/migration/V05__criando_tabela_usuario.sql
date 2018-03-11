@@ -1,6 +1,5 @@
 CREATE TABLE usuario(
   id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(30) NOT NULL,
-  sobrenome VARCHAR(50) NOT NULL,
-  data_nascimento DATE NOT NULL
+  sobrenome VARCHAR(50) NOT NULL
 );

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -24,9 +23,6 @@ public class Usuario implements Serializable{
     @Column(name = "sobrenome", length = 50, nullable = false)
     private String sobrenome;
 
-    @Column(name = "data_nascimento", nullable = false)
-    private LocalDate dataNascimento;
-
     @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
 
@@ -36,6 +32,10 @@ public class Usuario implements Serializable{
     @JsonIgnore
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
+
+    @OneToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
 
     public Long getId() {
         return id;
@@ -61,14 +61,6 @@ public class Usuario implements Serializable{
         this.sobrenome = sobrenome;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -91,6 +83,14 @@ public class Usuario implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     @Override
