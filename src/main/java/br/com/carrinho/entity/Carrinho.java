@@ -27,6 +27,11 @@ public class Carrinho implements Serializable {
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.PERSIST)
     private List<ProdutoCarrinho> produtoCarrinhoList;
 
+    @NotNull
+    @OneToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
+
     public Long getId() {
         return id;
     }
@@ -50,6 +55,14 @@ public class Carrinho implements Serializable {
     public void setProdutoCarrinhoList(List<ProdutoCarrinho> produtoCarrinhoList) {
         produtoCarrinhoList.forEach(produtoCarrinho -> produtoCarrinho.setCarrinho(this));
         this.produtoCarrinhoList = produtoCarrinhoList;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     @Transient
