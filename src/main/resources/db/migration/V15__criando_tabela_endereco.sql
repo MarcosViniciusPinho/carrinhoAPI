@@ -4,6 +4,6 @@ CREATE TABLE endereco(
   logradouro VARCHAR(100) NOT NULL,
   complemento VARCHAR(20),
   bairro VARCHAR(40) NOT NULL,
-  municipio VARCHAR(20) NOT NULL,
+  municipio VARCHAR(70) NOT NULL,
   estado VARCHAR(5) NOT NULL
 );
