@@ -46,13 +46,8 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({ DataIntegrityViolationException.class })
+    @ExceptionHandler({ DataIntegrityViolationException.class, NullParameterException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-        return throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler({ NullParameterException.class })
-    public ResponseEntity<Object> handleNullParameterException(NullParameterException ex, WebRequest request) {
         return throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
     }
 
