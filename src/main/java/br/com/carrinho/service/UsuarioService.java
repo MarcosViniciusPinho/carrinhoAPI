@@ -11,4 +11,11 @@ public interface UsuarioService {
      */
     Usuario findByLogin(String login);
 
+    /**
+     * Método que salva um usuário
+     * @param usuario usuario
+     * @return Usuario
+     */
+    Usuario save(Usuario usuario);
+
 }

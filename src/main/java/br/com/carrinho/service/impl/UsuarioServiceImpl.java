@@ -26,6 +26,14 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuario;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Usuario save(Usuario usuario) {
+        return this.usuarioRepository.save(usuario);
+    }
+
     private void validate(String login){
         if(StringUtils.isEmpty(login)){
             throw new NullParameterException("O login de usuario está nulo");
