@@ -102,7 +102,7 @@ public class Usuario implements Serializable{
             return false;
         }
         Usuario other = (Usuario) o;
-        return Objects.equals(id, other.id);
+        return Objects.equals(login, other.login) || Objects.equals(email, other.email);
     }
 
     @Override

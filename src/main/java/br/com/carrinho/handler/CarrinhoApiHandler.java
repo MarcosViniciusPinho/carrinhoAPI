@@ -3,6 +3,7 @@ package br.com.carrinho.handler;
 import br.com.carrinho.handler.domain.ResponseError;
 import br.com.carrinho.service.exception.NullParameterException;
 import br.com.carrinho.service.exception.RecurseNotFoundException;
+import br.com.carrinho.service.exception.UniqueException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -48,18 +49,27 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-        return throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
+        return this.throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ NullParameterException.class })
     public ResponseEntity<Object> handleNullParameterException(NullParameterException ex, WebRequest request) {
-        return throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
+        return this.throwException(ex, request, "operation.failed", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ RecurseNotFoundException.class })
     public ResponseEntity<Object> handleRecurseNotFoundException(RecurseNotFoundException ex, WebRequest request) {
-        List<ResponseError> erros = Arrays.asList(new ResponseError(ex.getMensagemClient(), ExceptionUtils.getRootCauseMessage(ex)));
-        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return this.throwException(ex, ex.getMensagemClient(), request, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ UniqueException.class })
+    public ResponseEntity<Object> handleUniqueException(UniqueException ex, WebRequest request) {
+        return this.throwException(ex, ex.getMensagemClient(), request, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<Object> throwException(Exception ex, String message, WebRequest request, HttpStatus status) {
+        List<ResponseError> erros = Arrays.asList(new ResponseError(message, ExceptionUtils.getRootCauseMessage(ex)));
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), status, request);
     }
 
     private ResponseEntity<Object> throwException(Exception ex, WebRequest request, String message, HttpStatus status){
