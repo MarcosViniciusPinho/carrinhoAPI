@@ -31,7 +31,7 @@ public class Usuario implements Serializable{
     private String login;
 
     @Size(max = 50, min = 10)
-    @Email
+    @Email(regexp = ".+@.+\\.[a-z]{3}+")
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
 

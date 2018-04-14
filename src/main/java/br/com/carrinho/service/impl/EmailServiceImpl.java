@@ -1,4 +1,4 @@
-package br.com.carrinho.service.email;
+package br.com.carrinho.service.impl;
 
 import br.com.carrinho.entity.Carrinho;
 import br.com.carrinho.service.EmailService;
