@@ -1,6 +1,9 @@
 package br.com.carrinho.entity;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,18 +18,24 @@ public class Usuario implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Size(max = 30, min = 3)
     @Column(name = "nome", length = 30, nullable = false)
     private String nome;
 
+    @Size(max = 50, min = 5)
     @Column(name = "sobrenome", length = 50, nullable = false)
     private String sobrenome;
 
+    @Size(max = 50, min = 4)
     @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
 
+    @Size(max = 50, min = 10)
+    @Email
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
 
+    @Size(max = 255, min = 8)
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
 

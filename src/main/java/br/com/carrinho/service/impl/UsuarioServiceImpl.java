@@ -30,7 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService{
      * {@inheritDoc}
      */
     @Override
-    public Usuario save(Usuario usuario) {
+    public Usuario create(Usuario usuario) {
         return this.usuarioRepository.save(usuario);
     }
 

@@ -24,7 +24,7 @@ public class UsuarioResource {
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Usuario> create(@Valid @RequestBody Usuario usuario){
-        Usuario usuarioSalvo = this.usuarioService.save(usuario);
+        Usuario usuarioSalvo = this.usuarioService.create(usuario);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(usuarioSalvo.getId()).toUri();

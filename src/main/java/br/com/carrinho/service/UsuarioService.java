@@ -16,6 +16,6 @@ public interface UsuarioService {
      * @param usuario usuario
      * @return Usuario
      */
-    Usuario save(Usuario usuario);
+    Usuario create(Usuario usuario);
 
 }
