@@ -58,7 +58,8 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ RecurseNotFoundException.class })
     public ResponseEntity<Object> handleRecurseNotFoundException(RecurseNotFoundException ex, WebRequest request) {
-        return throwException(ex, request, "recurse.not.found", HttpStatus.NOT_FOUND);
+        List<ResponseError> erros = Arrays.asList(new ResponseError(ex.getMensagemClient(), ExceptionUtils.getRootCauseMessage(ex)));
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     private ResponseEntity<Object> throwException(Exception ex, WebRequest request, String message, HttpStatus status){

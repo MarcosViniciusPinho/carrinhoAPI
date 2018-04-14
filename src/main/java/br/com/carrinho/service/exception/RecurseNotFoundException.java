@@ -2,8 +2,14 @@ package br.com.carrinho.service.exception;
 
 public class RecurseNotFoundException extends RuntimeException {
 
-    public RecurseNotFoundException(String mensagem) {
-        super(mensagem);
+    private String mensagemClient;
+
+    public RecurseNotFoundException(String mensagemClient, String mensagemException) {
+        super(mensagemException);
+        this.mensagemClient = mensagemClient;
     }
 
+    public String getMensagemClient() {
+        return mensagemClient;
+    }
 }
