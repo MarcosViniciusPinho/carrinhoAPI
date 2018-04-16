@@ -1,8 +1,9 @@
 package br.com.carrinho.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -20,22 +21,27 @@ public class Endereco implements Serializable{
     @Column(name = "cep")
     private Integer cep;
 
-    @NotEmpty
+    @NotBlank
+    @Size(max = 100, min = 2)
     @Column(name = "logradouro", nullable = false, length = 100)
     private String logradouro;
 
+    @Size(max = 20, min = 2)
     @Column(name = "complemento", length = 20)
     private String complemento;
 
-    @NotEmpty
+    @NotBlank
+    @Size(max = 40, min = 5)
     @Column(name = "bairro", length = 40, nullable = false)
     private String bairro;
 
-    @NotEmpty
+    @NotBlank
+    @Size(max = 20, min = 5)
     @Column(name = "municipio", length = 20, nullable = false)
     private String municipio;
 
-    @NotEmpty
+    @NotBlank
+    @Size(max = 5, min = 2)
     @Column(name = "estado", length = 5, nullable = false)
     private String estado;
 

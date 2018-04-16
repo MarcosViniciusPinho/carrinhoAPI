@@ -5,6 +5,8 @@ import br.com.carrinho.service.exception.NullParameterException;
 import br.com.carrinho.service.exception.RecurseNotFoundException;
 import br.com.carrinho.service.exception.UniqueException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
+import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +49,12 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatus status, WebRequest request) {
         List<ResponseError> erros = this.createErros(ex.getBindingResult());
         return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({ ConstraintViolationException.class })
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        List<ResponseError> erros = this.createErros(ex);
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({ DataIntegrityViolationException.class })
@@ -85,6 +95,19 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             erros.add(new ResponseError(messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()),
                     fieldError.toString()));
+        }
+
+        return erros;
+    }
+
+    private List<ResponseError> createErros(ConstraintViolationException ex) {
+        List<ResponseError> erros = new ArrayList<>();
+        for(ConstraintViolation erro : ex.getConstraintViolations()) {
+            ConstraintViolationImpl constraint = (ConstraintViolationImpl) erro;
+            PathImpl property = (PathImpl) constraint.getPropertyPath();
+            String mensagemClient = constraint.getMessage().replace("{0}", property.getLeafNode().getName());
+            String mensagemException = ExceptionUtils.getRootCauseMessage(ex);
+            erros.add(new ResponseError(mensagemClient, mensagemException));
         }
 
         return erros;
