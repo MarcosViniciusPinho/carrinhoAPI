@@ -1,6 +1,7 @@
 package br.com.carrinho.handler;
 
 import br.com.carrinho.handler.domain.ResponseError;
+import br.com.carrinho.handler.util.StringUtils;
 import br.com.carrinho.service.exception.NullParameterException;
 import br.com.carrinho.service.exception.RecurseNotFoundException;
 import br.com.carrinho.service.exception.UniqueException;
@@ -105,7 +106,8 @@ public class CarrinhoApiHandler extends ResponseEntityExceptionHandler {
         for(ConstraintViolation erro : ex.getConstraintViolations()) {
             ConstraintViolationImpl constraint = (ConstraintViolationImpl) erro;
             PathImpl property = (PathImpl) constraint.getPropertyPath();
-            String mensagemClient = constraint.getMessage().replace("{0}", property.getLeafNode().getName());
+            String mensagemClient = constraint.getMessage().replace("{0}",
+                    StringUtils.firstLetterUppercase(property.getLeafNode().getName()));
             String mensagemException = ExceptionUtils.getRootCauseMessage(ex);
             erros.add(new ResponseError(mensagemClient, mensagemException));
         }

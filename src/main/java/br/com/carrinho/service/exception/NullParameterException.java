@@ -6,4 +6,8 @@ public class NullParameterException extends NullPointerException {
         super(mensagem);
     }
 
+    public NullParameterException() {
+        super();
+    }
+
 }
