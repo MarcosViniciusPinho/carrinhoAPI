@@ -18,7 +18,6 @@ public class Endereco implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotBlank
     @Size(max = 10, min = 8)
     @Column(name = "cep")
     private String cep;
