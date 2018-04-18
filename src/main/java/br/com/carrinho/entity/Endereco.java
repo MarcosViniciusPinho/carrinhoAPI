@@ -18,8 +18,10 @@ public class Endereco implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotBlank
+    @Size(max = 10, min = 8)
     @Column(name = "cep")
-    private Integer cep;
+    private String cep;
 
     @NotBlank
     @Size(max = 100, min = 2)
@@ -53,11 +55,11 @@ public class Endereco implements Serializable{
         this.id = id;
     }
 
-    public Integer getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(Integer cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
