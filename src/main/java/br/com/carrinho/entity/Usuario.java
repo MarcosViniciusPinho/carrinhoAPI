@@ -20,17 +20,17 @@ public class Usuario implements Serializable{
     private Long id;
 
     @NotBlank
-    @Size(max = 30, min = 3)
+    @Size(max = 30)
     @Column(name = "nome", length = 30, nullable = false)
     private String nome;
 
     @NotBlank
-    @Size(max = 50, min = 5)
+    @Size(max = 50)
     @Column(name = "sobrenome", length = 50, nullable = false)
     private String sobrenome;
 
     @NotBlank
-    @Size(max = 50, min = 4)
+    @Size(max = 50)
     @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
 
@@ -40,7 +40,7 @@ public class Usuario implements Serializable{
     private String email;
 
     @NotBlank
-    @Size(max = 255, min = 8)
+    @Size(max = 255)
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
 

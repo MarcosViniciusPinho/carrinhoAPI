@@ -18,32 +18,32 @@ public class Endereco implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 10, min = 8)
+    @Size(max = 8)
     @Column(name = "cep")
     private String cep;
 
     @NotBlank
-    @Size(max = 100, min = 2)
+    @Size(max = 100)
     @Column(name = "logradouro", nullable = false, length = 100)
     private String logradouro;
 
-    @Size(max = 20, min = 2)
+    @Size(max = 20)
     @Column(name = "complemento", length = 20)
     private String complemento;
 
     @NotBlank
-    @Size(max = 40, min = 5)
+    @Size(max = 40)
     @Column(name = "bairro", length = 40, nullable = false)
     private String bairro;
 
     @NotBlank
-    @Size(max = 20, min = 5)
-    @Column(name = "municipio", length = 20, nullable = false)
+    @Size(max = 50)
+    @Column(name = "municipio", length = 50, nullable = false)
     private String municipio;
 
     @NotBlank
-    @Size(max = 5, min = 2)
-    @Column(name = "estado", length = 5, nullable = false)
+    @Size(max = 2)
+    @Column(name = "estado", length = 2, nullable = false)
     private String estado;
 
     public Long getId() {
