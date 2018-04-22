@@ -1,5 +1,6 @@
 package br.com.carrinho.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Endereco implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Size(max = 8)
     @Column(name = "cep")
     private String cep;
@@ -27,6 +29,7 @@ public class Endereco implements Serializable{
     @Column(name = "logradouro", nullable = false, length = 100)
     private String logradouro;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Size(max = 20)
     @Column(name = "complemento", length = 20)
     private String complemento;

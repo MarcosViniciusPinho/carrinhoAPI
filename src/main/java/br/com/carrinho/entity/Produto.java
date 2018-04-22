@@ -20,7 +20,6 @@ public class Produto implements Serializable{
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "nome", length = 30, nullable = false)
     private String nome;
 
@@ -28,20 +27,16 @@ public class Produto implements Serializable{
     @Column(name = "descricao", length = 60)
     private String descricao;
 
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "valor", precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @OneToOne
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
 
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "imagem", nullable = false)
     private String pathImagem;
 
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     @Column(name = "quantidade", nullable = false)
     private String capacidade;
 
