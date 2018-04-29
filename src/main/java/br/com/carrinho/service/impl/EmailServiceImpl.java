@@ -43,7 +43,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setText(this.createTemplate(carrinho), true);
             helper.setTo(carrinho.getUsuario().getEmail());
             helper.setFrom(carrinho.getUsuario().getEmail());
-            helper.setSubject("Prezado " + carrinho.getUsuario().getNome() + ", sua compra foi realizada com sucesso!");
+            helper.setSubject(String.format("Prezado %s, sua compra foi realizada com sucesso! Código da compra SVB%d", carrinho.getUsuario().getNome(), carrinho.getId()));
 
             this.mailSender.send(message);
 
