@@ -4,6 +4,8 @@ import br.com.carrinho.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
@@ -12,13 +14,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
      * @param login login
      * @return Usuario
      */
-    Usuario findByLogin(String login);
+    Optional<Usuario> findByLogin(String login);
 
     /**
      * Método que busca o usuario pelo email
      * @param email email
      * @return Usuario
      */
-    Usuario findByEmail(String email);
+    Optional<Usuario> findByEmail(String email);
 
 }

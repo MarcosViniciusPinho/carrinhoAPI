@@ -8,6 +8,8 @@ import br.com.carrinho.service.exception.UniqueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioServiceImpl implements UsuarioService{
 
@@ -19,9 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService{
      */
     @Override
     public Usuario findByLogin(String login) {
-        Usuario usuario = this.usuarioRepository.findByLogin(login);
+        Optional<Usuario> usuario = this.usuarioRepository.findByLogin(login);
         this.validateOnSearch(usuario);
-        return usuario;
+        return usuario.get();
     }
 
     /**
@@ -39,21 +41,25 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     private void validateLoginUnique(Usuario usuario) {
-        Usuario usuarioSalvo = this.usuarioRepository.findByLogin(usuario.getLogin());
-        if(usuarioSalvo != null && usuarioSalvo.equals(usuario)) {
-            throw new UniqueException("Já existe um usuário com o login informado", "Login duplicado");
-        }
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByLogin(usuario.getLogin());
+        this.throwUniqueException(usuarioOptional, usuario, "Login");
     }
 
     private void validateEmailUnique(Usuario usuario) {
-        Usuario usuarioSalvo = this.usuarioRepository.findByEmail(usuario.getEmail());
-        if(usuarioSalvo != null && usuarioSalvo.equals(usuario)) {
-            throw new UniqueException("Já existe um usuário com o e-mail informado", "E-mail duplicado");
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(usuario.getEmail());
+        this.throwUniqueException(usuarioOptional, usuario, "E-mail");
+    }
+
+    private void throwUniqueException(Optional<Usuario> usuarioOptional, Usuario usuario, String atributo) {
+        if(usuarioOptional.isPresent() && usuarioOptional.get().equals(usuario)) {
+            String mensagemClient = String.format("Já existe um usuário com o %s informado", atributo);
+            String mensagemException = String.format("%s duplicado", atributo);
+            throw new UniqueException(mensagemClient, mensagemException);
         }
     }
 
-    private void validateOnSearch(Usuario usuario){
-        if(usuario == null){
+    private void validateOnSearch(Optional<Usuario> usuario){
+        if(!usuario.isPresent()){
             throw new RecurseNotFoundException("O usuário não foi encontrado", "Não foi encontrado um usuário com o login fornecido");
         }
     }
