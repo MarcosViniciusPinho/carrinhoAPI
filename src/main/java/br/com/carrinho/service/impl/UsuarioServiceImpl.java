@@ -6,6 +6,7 @@ import br.com.carrinho.service.UsuarioService;
 import br.com.carrinho.service.exception.RecurseNotFoundException;
 import br.com.carrinho.service.exception.UniqueException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,7 +33,12 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public Usuario create(Usuario usuario) {
         this.validadeOnSave(usuario);
+        this.encodarSenha(usuario);
         return this.usuarioRepository.save(usuario);
+    }
+
+    private void encodarSenha(final Usuario usuario) {
+        usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
     }
 
     private void validadeOnSave(Usuario usuario) {
