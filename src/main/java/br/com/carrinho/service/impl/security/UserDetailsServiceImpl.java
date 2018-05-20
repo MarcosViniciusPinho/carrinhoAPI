@@ -1,4 +1,4 @@
-package br.com.carrinho.security;
+package br.com.carrinho.service.impl.security;
 
 import br.com.carrinho.entity.Usuario;
 import br.com.carrinho.repository.UsuarioRepository;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
-
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{

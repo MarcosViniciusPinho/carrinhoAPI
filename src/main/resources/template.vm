@@ -3,9 +3,9 @@
 
 <body style="font-family: Arial; font-size: 14px;">
 
-<p style="text-align: right">
-    <img src="https://image.ibb.co/kMSJPH/logo_svb.png" alt="Sistema de Venda de Cerveja" width="80px;">
-</p>
+##<p style="text-align: right">
+##    <img src="https://image.ibb.co/kMSJPH/logo_svb.png" alt="Sistema de Venda de Cerveja" width="80px;">
+##</p>
 
 <h1 style="font-size: 22px">Olá $usuario.nome</h1>
 
