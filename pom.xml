@@ -35,7 +35,7 @@
 		<database.url>jdbc:mysql://carrinho.cso5xzxqywko.us-east-1.rds.amazonaws.com:3306/carrinho</database.url>
 		<database.user>root</database.user>
 		<database.password>dmiN8732</database.password>
-		<database.driver>com.mysql.jdbc.Driver</database.driver>
+		<database.driver>com.mysql.cj.jdbc.Driver</database.driver>
 		<spring.boot.starter.email>1.4.3.RELEASE</spring.boot.starter.email>
 		<velocity.version>1.7</velocity.version>
 		<velocity.tools.version>2.0</velocity.tools.version>
