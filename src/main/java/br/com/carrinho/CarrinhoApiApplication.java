@@ -1,9 +1,11 @@
 package br.com.carrinho;
 
+import br.com.carrinho.config.property.CarrinhoApiProperty;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @SpringBootApplication
+@EnableConfigurationProperties(CarrinhoApiProperty.class)
 public class CarrinhoApiApplication {
 
 	public static void main(String[] args) {
