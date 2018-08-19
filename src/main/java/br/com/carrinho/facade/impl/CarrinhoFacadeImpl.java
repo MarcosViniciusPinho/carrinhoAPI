@@ -10,6 +10,8 @@ import br.com.carrinho.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class CarrinhoFacadeImpl implements CarrinhoFacade{
 
@@ -29,6 +31,7 @@ public class CarrinhoFacadeImpl implements CarrinhoFacade{
     public Carrinho create(Carrinho carrinho) {
         Usuario usuario = this.usuarioService.findByLogin(carrinho.getUsuario().getLogin());
         carrinho.setUsuario(usuario);
+        carrinho.setDataCompra(LocalDateTime.now());
         this.produtoService.recuperarProdutosNoCarrinho(carrinho.getProdutoCarrinhoList());
         Carrinho carrinhoSalvo = this.carrinhoService.create(carrinho);
         this.emailService.send(carrinhoSalvo);

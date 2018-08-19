@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +23,9 @@ public class Carrinho implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+
+    @Column(name = "data_compra", nullable = false)
+    private LocalDateTime dataCompra;
 
     @NotNull
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.PERSIST)
@@ -63,6 +67,14 @@ public class Carrinho implements Serializable {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public LocalDateTime getDataCompra() {
+        return dataCompra;
+    }
+
+    public void setDataCompra(LocalDateTime dataCompra) {
+        this.dataCompra = dataCompra;
     }
 
     @Transient
